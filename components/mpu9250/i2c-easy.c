@@ -45,13 +45,13 @@ esp_err_t i2c_master_init(uint8_t i2c_num, uint8_t gpio_sda, uint8_t gpio_scl)
 {
   int i2c_master_port = i2c_num;
   i2c_config_t conf;
-  conf.mode = I2C_MODE_MASTER;
+  conf.mode = 1; //I2C_MODE_MASTER;
   conf.sda_io_num = gpio_sda;
   conf.sda_pullup_en = 0;
   conf.scl_io_num = gpio_scl;
   conf.scl_pullup_en = 0;
-  ESP_ERROR_CHECK(i2c_driver_install(i2c_master_port, conf.mode));
-  ESP_ERROR_CHECK(i2c_param_config(i2c_master_port, &conf));
+  ESP_ERROR_CHECK (i2c_driver_install(i2c_master_port, conf.mode, NULL, NULL, NULL));
+  ESP_ERROR_CHECK (i2c_param_config(i2c_master_port, &conf));
   return ESP_OK;
 }
 

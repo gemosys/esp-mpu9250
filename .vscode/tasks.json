@@ -1,46 +1,38 @@
 {
-  "version": "0.1.0",
-  "command": "bash",
-  "args": ["-c"],
-  "isShellCommand": true,
-  "showOutput": "always",
-  "suppressTaskName": true,
-  "options": {
-    "cwd": "${workspaceRoot}",
-    "env": {
-      "IDF_PATH": "${env.IDF_PATH}",
-      "PATH": "${env.PATH}:${env.IDF_PATH}/../xtensa-lx106-elf/bin"
-    }
-  },
-  "tasks": [
-    {
-      "taskName": "build app",
-      "args": ["make app"],
-      "isBuildCommand": true,
-      "problemMatcher": {
-        "owner": "cpp",
-        "fileLocation": "absolute",
-        "pattern": {
-          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-          "file": 1,
-          "line": 2,
-          "column": 3,
-          "severity": 4,
-          "message": 5
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "idf.py build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "flash",
+            "type": "shell",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "idf.py -p COM5 flash",
+            "problemMatcher": []
         }
-      }
-    },
-    {
-      "taskName": "clean app",
-      "args": ["make app-clean"]
-    },
-    {
-      "taskName": "monitor",
-      "args": ["make monitor"]
-    },
-    {
-      "taskName": "flash app",
-      "args": ["make app-flash"]
-    }
-  ]
+
+        {
+            "label": "openocd",
+            "type": "shell",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "openocd -f interface/ft232r.cfg -f board/esp-wroom-32.cfg",
+        }
+    ]
 }
